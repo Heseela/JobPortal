@@ -17,8 +17,9 @@ const router = useRouter();
   const navLinks = [
     { href: "/find-jobs", label: "Find Jobs" },
     { href: "/find-talent", label: "Find Talent" },
-    { href: "/upload-job", label: "Upload Job" },
-    { href: "/about-us", label: "About Us" },
+    { href: "/post-job", label: "Post Job" },
+    { href: "/posted-job", label: "Posted Job" },
+    { href: "/job-history", label: "Job History" },
   ];
 
  const handleNavClick = (href) => (e) => {

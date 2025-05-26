@@ -2,79 +2,69 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import Filter from "./Filter";
-import {
-  FaMapMarkerAlt,
-  FaBriefcase,
-  FaMoneyBillWave,
-  FaClock,
-} from "react-icons/fa";
+import TalentFilter from "./TalentFilter";
+import { FaMapMarkerAlt, FaBriefcase, FaUser } from "react-icons/fa";
 
-const jobsData = [
+const talentsData = [
   {
     id: 1,
+    name: "Alex Johnson",
     title: "Senior Software Engineer",
-    company: "TechCorp",
     location: "San Francisco",
-    salary: 140000,
-    type: "Full Time",
-    experience: "Expert",
-    posted: "2 days ago",
-    description: "We're looking for an experienced engineer to join our team.",
+    experience: "8 years",
+    skills: ["JavaScript", "React", "Node.js", "AWS"],
+    availability: "Available in 2 weeks",
+    bio: "Full-stack developer with extensive experience in building scalable web applications.",
   },
   {
     id: 2,
+    name: "Sarah Williams",
     title: "UX Designer",
-    company: "DesignHub",
     location: "Remote",
-    salary: 90000,
-    type: "Contract",
-    experience: "Intermediate",
-    posted: "1 week ago",
-    description: "Join our design team to create beautiful user experiences.",
+    experience: "5 years",
+    skills: ["UI/UX Design", "Figma", "User Research", "Prototyping"],
+    availability: "Immediately available",
+    bio: "Passionate about creating intuitive user experiences with a focus on accessibility.",
   },
   {
     id: 3,
-    title: "Data Science Intern",
-    company: "DataWorks",
+    name: "Michael Chen",
+    title: "Data Scientist",
     location: "New York",
-    salary: 30000,
-    type: "Internship",
-    experience: "Entry Level",
-    posted: "3 days ago",
-    description: "Great opportunity for aspiring data scientists.",
+    experience: "3 years",
+    skills: ["Python", "Machine Learning", "SQL", "Data Visualization"],
+    availability: "Available in 1 month",
+    bio: "Data enthusiast specializing in predictive modeling and data-driven decision making.",
   },
   {
     id: 4,
+    name: "Emma Rodriguez",
     title: "Product Manager",
-    company: "ProductLabs",
     location: "London",
-    salary: 100000,
-    type: "Full Time",
-    experience: "Intermediate",
-    posted: "5 days ago",
-    description: "Lead product development for our flagship application.",
+    experience: "6 years",
+    skills: ["Agile", "Product Strategy", "Market Research", "Roadmapping"],
+    availability: "Part-time availability",
+    bio: "Product leader with experience in both startups and enterprise environments.",
   },
   {
     id: 5,
+    name: "David Kim",
     title: "DevOps Engineer",
-    company: "CloudSystems",
     location: "Berlin",
-    salary: 120000,
-    type: "Full Time",
-    experience: "Expert",
-    posted: "1 day ago",
-    description: "Help us build and maintain our cloud infrastructure.",
+    experience: "4 years",
+    skills: ["AWS", "Docker", "Kubernetes", "CI/CD"],
+    availability: "Freelance",
+    bio: "Infrastructure specialist focused on building reliable and scalable systems.",
   },
 ];
 
-const FindJob = () => {
+const FindTalent = () => {
   const [activeFilters, setActiveFilters] = useState({
+    name: "",
     jobTitle: [],
     location: [],
-    experience: [],
-    jobType: [],
-    salaryRange: [0, 150000],
+    skills: [],
+    experience: [0, 20],
   });
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -85,54 +75,54 @@ const FindJob = () => {
 
   const handleClearFilters = () => {
     setActiveFilters({
+      name: "",
       jobTitle: [],
       location: [],
-      experience: [],
-      jobType: [],
-      salaryRange: [0, 150000],
+      skills: [],
+      experience: [0, 20],
     });
     setSearchQuery("");
   };
 
-  const filteredJobs = jobsData.filter((job) => {
+  const filteredTalents = talentsData.filter((talent) => {
+    // Convert experience string to number (e.g., "8 years" -> 8)
+    const experienceYears = parseInt(talent.experience, 10) || 0;
+
     const matchesSearch =
       searchQuery === "" ||
-      job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      job.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      job.description.toLowerCase().includes(searchQuery.toLowerCase());
+      talent.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      talent.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      talent.bio.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesName =
+      activeFilters.name === "" ||
+      talent.name.toLowerCase().includes(activeFilters.name.toLowerCase());
 
     const matchesTitle =
       activeFilters.jobTitle.length === 0 ||
-      activeFilters.jobTitle.includes(job.title);
+      activeFilters.jobTitle.includes(talent.title);
+
     const matchesLocation =
       activeFilters.location.length === 0 ||
-      activeFilters.location.includes(job.location);
+      activeFilters.location.includes(talent.location);
+
+    const matchesSkills =
+      activeFilters.skills.length === 0 ||
+      activeFilters.skills.some((skill) => talent.skills.includes(skill));
+
     const matchesExperience =
-      activeFilters.experience.length === 0 ||
-      activeFilters.experience.includes(job.experience);
-    const matchesType =
-      activeFilters.jobType.length === 0 ||
-      activeFilters.jobType.includes(job.type);
-    const matchesSalary =
-      job.salary >= activeFilters.salaryRange[0] &&
-      job.salary <= activeFilters.salaryRange[1];
+      experienceYears >= activeFilters.experience[0] &&
+      experienceYears <= activeFilters.experience[1];
 
     return (
       matchesSearch &&
+      matchesName &&
       matchesTitle &&
       matchesLocation &&
-      matchesExperience &&
-      matchesType &&
-      matchesSalary
+      matchesSkills &&
+      matchesExperience
     );
   });
-
-  const formatSalary = (salary) => {
-    if (salary < 50000) {
-      return `$${Math.round(salary / 1000)}k`;
-    }
-    return `$${(salary / 1000).toFixed(0)}k`;
-  };
 
   return (
     <div className="min-h-screen bg-primary-950 text-primary-100 py-12 px-4 sm:px-6 lg:px-8">
@@ -144,10 +134,10 @@ const FindJob = () => {
           className="mb-8"
         >
           <h1 className="text-3xl font-bold text-center mb-2">
-            Find Your Dream Job
+            Find Top Talent
           </h1>
           <p className="text-primary-300 text-center max-w-2xl mx-auto">
-            Browse through thousands of full-time and part-time jobs near you
+            Discover skilled professionals ready for your next project
           </p>
         </motion.div>
 
@@ -160,7 +150,7 @@ const FindJob = () => {
           <div className="relative max-w-2xl mx-auto">
             <input
               type="text"
-              placeholder="Search for jobs, companies, or keywords"
+              placeholder="Search by name, skills, or role"
               className="w-full bg-primary-900 border border-primary-800 rounded-lg py-3 pl-4 pr-12 text-primary-100 placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:border-transparent"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -186,7 +176,7 @@ const FindJob = () => {
 
         <div className="flex flex-col md:flex-row gap-8">
           <div className="w-full md:w-80">
-            <Filter
+            <TalentFilter
               onFilterChange={handleFilterChange}
               onClearFilters={handleClearFilters}
             />
@@ -200,54 +190,57 @@ const FindJob = () => {
               className="mb-4 flex justify-between items-center"
             >
               <h2 className="text-xl font-semibold">
-                {filteredJobs.length}{" "}
-                {filteredJobs.length === 1 ? "Job" : "Jobs"} Found
+                {filteredTalents.length}{" "}
+                {filteredTalents.length === 1 ? "Talent" : "Talents"} Found
               </h2>
             </motion.div>
 
-            {filteredJobs.length > 0 ? (
+            {filteredTalents.length > 0 ? (
               <div className="space-y-6">
-                {filteredJobs.map((job) => (
+                {filteredTalents.map((talent) => (
                   <motion.div
-                    key={job.id}
+                    key={talent.id}
                     whileHover={{ scale: 1.01 }}
                     className="bg-primary-900 border border-primary-800 rounded-lg p-6 hover:border-secondary-500/50 transition-all duration-200"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div>
                         <h3 className="text-xl font-bold text-primary-100 mb-1">
-                          {job.title}
+                          {talent.name}
                         </h3>
-                        <p className="text-primary-300 mb-2">{job.company}</p>
+                        <p className="text-primary-300 mb-2">{talent.title}</p>
                         <div className="flex flex-wrap gap-3 mt-3">
                           <span className="flex items-center text-sm text-primary-200">
                             <FaMapMarkerAlt className="mr-1 text-secondary-500" />
-                            {job.location}
+                            {talent.location}
                           </span>
                           <span className="flex items-center text-sm text-primary-200">
                             <FaBriefcase className="mr-1 text-secondary-500" />
-                            {job.experience}
+                            {talent.experience} experience
                           </span>
                           <span className="flex items-center text-sm text-primary-200">
-                            <FaMoneyBillWave className="mr-1 text-secondary-500" />
-                            {formatSalary(job.salary)}
+                            <FaUser className="mr-1 text-secondary-500" />
+                            {talent.availability}
                           </span>
-                          <span className="flex items-center text-sm text-primary-200">
-                            <FaClock className="mr-1 text-secondary-500" />
-                            {job.posted}
-                          </span>
+                        </div>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {talent.skills.map((skill) => (
+                            <span
+                              key={skill}
+                              className="px-2 py-1 bg-primary-800 text-primary-200 text-xs rounded-full"
+                            >
+                              {skill}
+                            </span>
+                          ))}
                         </div>
                       </div>
                       <div className="flex flex-col items-end gap-2">
-                        <span className="px-3 py-1 bg-primary-800 text-secondary-500 text-sm font-medium rounded-full">
-                          {job.type}
-                        </span>
                         <button className="px-4 py-2 bg-secondary-500 hover:bg-secondary-600 text-primary-100 font-medium rounded-lg transition-colors duration-200">
-                          Apply Now
+                          View Profile
                         </button>
                       </div>
                     </div>
-                    <p className="mt-4 text-primary-300">{job.description}</p>
+                    <p className="mt-4 text-primary-300">{talent.bio}</p>
                   </motion.div>
                 ))}
               </div>
@@ -257,7 +250,7 @@ const FindJob = () => {
                 animate={{ opacity: 1 }}
                 className="bg-primary-900 border border-primary-800 rounded-lg p-8 text-center"
               >
-                <h3 className="text-xl font-medium mb-2">No jobs found</h3>
+                <h3 className="text-xl font-medium mb-2">No talents found</h3>
                 <p className="text-primary-300">
                   Try adjusting your search or filter criteria
                 </p>
@@ -276,4 +269,4 @@ const FindJob = () => {
   );
 };
 
-export default FindJob;
+export default FindTalent;

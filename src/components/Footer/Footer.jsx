@@ -188,7 +188,7 @@ const Footer = () => {
           className="text-center text-primary-400"
         >
           <p>
-            Designed & Developed By <span className="font-bold text-primary-200">Chandrabhan Maurya</span>
+            Designed & Developed By <span className="font-bold text-secondary-500">Hishila Bhusal</span>
           </p>
         </motion.div>
       </div>

@@ -5,31 +5,50 @@ import { motion } from "framer-motion";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 
-const Filter = ({ onFilterChange, onClearFilters }) => {
+const TalentFilter = ({ onFilterChange, onClearFilters }) => {
   const [filters, setFilters] = useState({
+    name: "",
     jobTitle: [],
     location: [],
-    experience: [],
-    jobType: [],
-    salaryRange: [0, 150000],
+    skills: [],
+    experience: [0, 20],
   });
 
   const jobTitles = [
-    "Senior Software Engineer",
-    "Product Manager",
+    "Software Engineer",
     "UX Designer",
-    "Data Science Intern",
+    "Product Manager",
+    "Data Scientist",
     "DevOps Engineer",
   ];
-  const locations = ["Remote", "New York", "San Francisco", "London", "Berlin"];
-  const experienceLevels = ["Entry Level", "Intermediate", "Expert"];
-  const jobTypes = [
-    "Full Time",
-    "Part Time",
-    "Contract",
-    "Freelance",
-    "Internship",
+
+  const locations = [
+    "Remote",
+    "San Francisco",
+    "New York",
+    "London",
+    "Berlin",
+    "Tokyo",
   ];
+
+  const skills = [
+    "JavaScript",
+    "React",
+    "Node.js",
+    "Python",
+    "TypeScript",
+    "AWS",
+    "Docker",
+    "UI/UX Design",
+  ];
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFilters((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleCheckboxChange = (category, value) => {
     setFilters((prev) => {
@@ -43,10 +62,10 @@ const Filter = ({ onFilterChange, onClearFilters }) => {
     });
   };
 
-  const handleSalaryChange = (value) => {
+  const handleExperienceChange = (value) => {
     setFilters((prev) => ({
       ...prev,
-      salaryRange: value,
+      experience: value,
     }));
   };
 
@@ -54,9 +73,8 @@ const Filter = ({ onFilterChange, onClearFilters }) => {
     const resetFilters = {
       jobTitle: [],
       location: [],
-      experience: [],
-      jobType: [],
-      salaryRange: [0, 150000],
+      experience: [0, 20],
+      skills: [],
     };
     setFilters(resetFilters);
     onClearFilters();
@@ -64,7 +82,7 @@ const Filter = ({ onFilterChange, onClearFilters }) => {
 
   useEffect(() => {
     onFilterChange(filters);
-  }, [filters]);
+  }, [filters, onFilterChange]);
 
   const renderCheckboxGroup = (label, category, options) => (
     <div className="mb-6">
@@ -95,34 +113,37 @@ const Filter = ({ onFilterChange, onClearFilters }) => {
       transition={{ duration: 0.4 }}
       className="bg-primary-900 border border-primary-800 rounded-lg p-6"
     >
-      <h3 className="text-lg font-bold text-primary-100 mb-4">Filter Jobs</h3>
+      <h3 className="text-lg font-bold text-primary-100 mb-4">
+        Filter Talents
+      </h3>
 
       {renderCheckboxGroup("Job Titles", "jobTitle", jobTitles)}
       {renderCheckboxGroup("Locations", "location", locations)}
-      {renderCheckboxGroup("Experience", "experience", experienceLevels)}
-      {renderCheckboxGroup("Job Type", "jobType", jobTypes)}
+      {renderCheckboxGroup("Skills", "skills", skills)}
 
       <div className="mb-6">
-        <h4 className="text-primary-200 font-semibold mb-2">Salary Range</h4>
+        <h4 className="text-primary-200 font-semibold mb-2">
+          Experience (years)
+        </h4>
         <div className="px-2">
           <Slider
             range
             min={0}
-            max={150000}
-            step={1000}
-            value={filters.salaryRange}
-            onChange={handleSalaryChange}
+            max={20}
+            step={1}
+            value={filters.experience}
+            onChange={handleExperienceChange}
             trackStyle={[{ backgroundColor: "#F59E0B" }]}
             handleStyle={[
-              { backgroundColor: "#F59E0B", borderColor: "#F59E0B" },
-              { backgroundColor: "#F59E0B", borderColor: "#F59E0B" },
+              { borderColor: "#F59E0B", backgroundColor: "#F59E0B" },
+              { borderColor: "#F59E0B", backgroundColor: "#F59E0B" },
             ]}
-            railStyle={{ backgroundColor: "#374151" }}
+            railStyle={{ backgroundColor: "#1E293B" }}
           />
-        </div>
-        <div className="flex justify-between mt-2 text-sm text-primary-300">
-          <span>${filters.salaryRange[0].toLocaleString()}</span>
-          <span>${filters.salaryRange[1].toLocaleString()}</span>
+          <div className="flex justify-between text-sm text-primary-300 mt-2">
+            <span>{filters.experience[0]} years</span>
+            <span>{filters.experience[1]} years</span>
+          </div>
         </div>
       </div>
 
@@ -136,4 +157,4 @@ const Filter = ({ onFilterChange, onClearFilters }) => {
   );
 };
 
-export default Filter;
+export default TalentFilter;
