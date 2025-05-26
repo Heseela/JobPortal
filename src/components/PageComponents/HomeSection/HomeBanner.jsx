@@ -4,8 +4,15 @@ import React from "react";
 import Image from "next/image";
 import { FaSearch, FaBriefcase, FaClock } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation"; 
 
 function HomeBanner() {
+  const router = useRouter(); 
+
+  const handleSearch = () => {
+    router.push("/login"); 
+  };
+
   return (
     <div className="relative py-32 flex items-center justify-center px-4 sm:px-8 md:px-10 bg-primary-950 overflow-hidden">
       <motion.div 
@@ -127,6 +134,7 @@ function HomeBanner() {
                   boxShadow: "0 0 15px rgba(234, 179, 8, 0.4)"
                 }}
                 whileTap={{ scale: 0.98 }}
+                onClick={handleSearch}
               >
                 <FaSearch className="mr-2" />
                 Search

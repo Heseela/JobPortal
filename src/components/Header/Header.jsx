@@ -68,8 +68,8 @@ const router = useRouter();
             <Link
               key={link.href}
               href={link.href}
-              onClick={handleNavClick(link.href)}
-              className="hover:text-secondary-500 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-secondary-500 rounded px-2 py-1"
+              // onClick={handleNavClick(link.href)}
+              className="hover:text-secondary-500 transition-colors duration-200 focus:outline-none rounded px-2 py-1"
               aria-label={link.label}
             >
               {link.label}
