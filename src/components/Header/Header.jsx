@@ -56,7 +56,7 @@ const router = useRouter();
         <div className="flex items-center space-x-2 text-secondary-500">
           <Link
             href="/"
-            className="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-secondary-500 rounded"
+            className="flex items-center space-x-2 focus:outline-none"
             aria-label="Home"
           >
             <FaBriefcase className="text-secondary-500 text-2xl" />
