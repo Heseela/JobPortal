@@ -1,7 +1,7 @@
 import { Manrope } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header/Header";
 import { MantineProvider } from "@mantine/core";
+import ClientLayout from "@/components/ClientLayout";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -18,11 +18,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${manrope.className} flex flex-col bg-primary-950`}>
-      <MantineProvider>
-        <Header/>
-       {children}
-
-       </MantineProvider>
+        <MantineProvider>
+         <ClientLayout>{children}</ClientLayout>
+        </MantineProvider>
       </body>
     </html>
   );

@@ -1,79 +1,19 @@
-// import { Avatar, Indicator } from "@mantine/core";
-// import Image from "next/image";
-// import Link from "next/link";
-// import React from "react";
-// import { FaBriefcase } from "react-icons/fa"; //
-// import { FiBell, FiSettings } from "react-icons/fi";
-
-// function Header() {
-//   return (
-//     <header className="bg-primary-950 text-white py-4 px-6">
-//       <div className="max-w-7xl mx-auto flex items-center justify-between">
-//         <div className="flex items-center space-x-2 text-secondary-400">
-//           <Link href="/" className="flex items-center space-x-2">
-//             <FaBriefcase className="text-secondary-400 text-2xl" />
-//             <span className="text-xl font-bold">HireSphere</span>
-//           </Link>
-//         </div>
-
-//         <nav className="hidden md:flex space-x-8">
-//           <Link href="/find-jobs" className="hover:text-secondary-400 hover:underline hover:underline-secondary-400">
-//             Find Jobs
-//           </Link>
-//           <Link href="/find-talent" className="hover:text-gray-400">
-//             Find Talent
-//           </Link>
-//           <Link href="/upload-job" className="hover:text-gray-400">
-//             Upload Job
-//           </Link>
-//           <Link href="/about-us" className="hover:text-gray-400">
-//             About Us
-//           </Link>
-//         </nav>
-
-//         <div className="flex items-center space-x-4">
-//           <div className="flex items-center space-x-2">
-//             <span>Marshal</span>
-
-//             <Image
-//               src="/avatar.png"
-//               alt="User Avatar"
-//               width={32}
-//               height={32}
-//               className="rounded-full object-cover"
-//             />
-//           </div>
-
-//           <Link href="/settings" className="bg-primary-800 p-2 rounded-full">
-//             <FiSettings className="text-xl" />
-//           </Link>
-
-//           <Link
-//             href="/notifications"
-//             className="bg-primary-800 p-2 rounded-full"
-//           >
-//               <FiBell className="text-xl" />
-//           </Link>
-//         </div>
-//       </div>
-//     </header>
-//   );
-// }
-
-// export default Header;
-
 "use client";
-import { Indicator, Menu, Burger } from "@mantine/core";
-import Image from "next/image";
+import { Burger } from "@mantine/core";
 import Link from "next/link";
 import React, { useState } from "react";
 import { FaBriefcase } from "react-icons/fa";
 import { FiBell, FiSettings } from "react-icons/fi";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+
 
 function Header() {
   const [mobileOpened, setMobileOpened] = useState(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
+const isLoggedIn = false; 
 
+const router = useRouter();
   const navLinks = [
     { href: "/find-jobs", label: "Find Jobs" },
     { href: "/find-talent", label: "Find Talent" },
@@ -81,28 +21,55 @@ function Header() {
     { href: "/about-us", label: "About Us" },
   ];
 
+ const handleNavClick = (href) => (e) => {
+  e.preventDefault();
+  if (!isLoggedIn) {
+    router.push("/login");
+  } else {
+    router.push(href);
+  }
+  setMobileOpened(false); 
+};
+
+  const userIconLinks = [
+    {
+      href: "/settings",
+      icon: <FiSettings className="text-xl" />,
+      label: "Settings",
+    },
+    {
+      href: "/notifications",
+      icon: <FiBell className="text-xl" />,
+      label: "Notifications",
+    },
+  ];
+
+  const userMenuLinks = [
+    { href: "/profile", label: "Profile" },
+    { href: "/settings", label: "Settings" },
+  ];
+
   return (
     <header className="bg-primary-950 text-white py-4 px-6 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Logo/Brand */}
-        <div className="flex items-center space-x-2 text-secondary-400">
+        <div className="flex items-center space-x-2 text-secondary-500">
           <Link
             href="/"
-            className="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-secondary-400 rounded"
+            className="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-secondary-500 rounded"
             aria-label="Home"
           >
-            <FaBriefcase className="text-secondary-400 text-2xl" />
+            <FaBriefcase className="text-secondary-500 text-2xl" />
             <span className="text-xl font-bold">HireSphere</span>
           </Link>
         </div>
 
-        {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-8">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="hover:text-secondary-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-secondary-400 rounded px-2 py-1"
+              onClick={handleNavClick(link.href)}
+              className="hover:text-secondary-500 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-secondary-500 rounded px-2 py-1"
               aria-label={link.label}
             >
               {link.label}
@@ -117,7 +84,7 @@ function Header() {
           aria-label="Toggle navigation"
         />
 
-        <div className="flex items-center space-x-4">
+        {/* <div className="flex items-center space-x-4">
           <Menu
             width={200}
             position="bottom-end"
@@ -127,7 +94,7 @@ function Header() {
             withinPortal
           >
             <Menu.Target>
-              <div className="flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-secondary-400 rounded-full">
+              <div className="flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-secondary-500 rounded-full">
                 <span className="sr-only sm:not-sr-only">Marshal</span>
                 <Image
                   src="/avatar.png"
@@ -138,32 +105,46 @@ function Header() {
                 />
               </div>
             </Menu.Target>
-            <Link href="/settings" className="bg-primary-800 p-2 rounded-full">
-              <FiSettings className="text-xl" />
-            </Link>
 
-            <Link
-              href="/notifications"
-              className="bg-primary-800 p-2 rounded-full"
-            >
-              <FiBell className="text-xl" />
-            </Link>
+            {userIconLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="bg-primary-800 p-2 rounded-full"
+                aria-label={link.label}
+              >
+                {link.icon}
+              </Link>
+            ))}
 
             <Menu.Dropdown>
-              <Menu.Item component={Link} href="/profile">
-                Profile
-              </Menu.Item>
-              <Menu.Item component={Link} href="/settings">
-                Settings
-              </Menu.Item>
+              {userMenuLinks.map((link) => (
+                <Menu.Item key={link.href} component={Link} href={link.href}>
+                  {link.label}
+                </Menu.Item>
+              ))}
               <Menu.Divider />
               <Menu.Item color="red">Logout</Menu.Item>
             </Menu.Dropdown>
           </Menu>
-        </div>
+        </div> */}
+
+        <motion.div
+          whileHover={{
+            scale: 1.05,
+            boxShadow: "0 0 15px rgba(234, 179, 8, 0.4)",
+          }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <Link
+            href="/login"
+            className="h-[42px] self-end bg-secondary-500 hover:bg-secondary-600 text-primary-100 font-medium px-4 rounded-lg flex items-center justify-center transition-colors duration-200"
+          >
+            Login
+          </Link>
+        </motion.div>
       </div>
 
-      {/* Mobile Navigation */}
       {mobileOpened && (
         <nav className="md:hidden bg-primary-900 py-4 px-6">
           <div className="flex flex-col space-y-4">
@@ -171,7 +152,7 @@ function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="hover:text-secondary-400 py-2 px-4 rounded hover:bg-primary-800 transition-colors"
+                className="hover:text-secondary-500 py-2 px-4 rounded hover:bg-primary-800 transition-colors"
                 onClick={() => setMobileOpened(false)}
                 aria-label={link.label}
               >
