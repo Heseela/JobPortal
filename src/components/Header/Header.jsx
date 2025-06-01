@@ -17,7 +17,7 @@ function Header() {
     { href: "/find-jobs", label: "Find Jobs" },
     { href: "/find-talent", label: "Find Talent" },
     { href: "/post-job", label: "Post Job" },
-    { href: "/posted-job", label: "Posted Job" },
+    { href: "/posted-jobs", label: "Posted Jobs" },
     { href: "/job-history", label: "Job History" },
   ];
 

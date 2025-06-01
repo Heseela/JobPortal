@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import TalentFilter from "./TalentFilter";
 import { FaMapMarkerAlt, FaBriefcase, FaUser } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 const talentsData = [
   {
@@ -68,7 +69,7 @@ const FindTalent = () => {
   });
 
   const [searchQuery, setSearchQuery] = useState("");
-
+  const router = useRouter();
   const handleFilterChange = (newFilters) => {
     setActiveFilters(newFilters);
   };
@@ -85,7 +86,6 @@ const FindTalent = () => {
   };
 
   const filteredTalents = talentsData.filter((talent) => {
-    // Convert experience string to number (e.g., "8 years" -> 8)
     const experienceYears = parseInt(talent.experience, 10) || 0;
 
     const matchesSearch =
@@ -94,9 +94,10 @@ const FindTalent = () => {
       talent.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       talent.bio.toLowerCase().includes(searchQuery.toLowerCase());
 
-    const matchesName =
-      activeFilters.name === "" ||
+      const matchesName =
+      !activeFilters.name ||
       talent.name.toLowerCase().includes(activeFilters.name.toLowerCase());
+    
 
     const matchesTitle =
       activeFilters.jobTitle.length === 0 ||
@@ -235,7 +236,10 @@ const FindTalent = () => {
                         </div>
                       </div>
                       <div className="flex flex-col items-end gap-2">
-                        <button className="px-4 py-2 bg-secondary-500 hover:bg-secondary-600 text-primary-100 font-medium rounded-lg transition-colors duration-200">
+                        <button
+                          onClick={() => router.push(`/find-talent/${talent.id}`)}
+                          className="px-4 py-2 bg-secondary-500 hover:bg-secondary-600 text-primary-100 font-medium rounded-lg transition-colors duration-200"
+                        >
                           View Profile
                         </button>
                       </div>
