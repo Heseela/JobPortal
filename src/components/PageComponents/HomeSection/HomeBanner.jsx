@@ -4,45 +4,45 @@ import React from "react";
 import Image from "next/image";
 import { FaSearch, FaBriefcase, FaClock } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 
 function HomeBanner() {
-  const router = useRouter(); 
+  const router = useRouter();
 
   const handleSearch = () => {
-    router.push("/login"); 
+    router.push("/login");
   };
 
   return (
     <div className="relative py-32 flex items-center justify-center px-4 sm:px-8 md:px-10 bg-primary-950 overflow-hidden">
-      <motion.div 
+      <motion.div
         className="absolute -left-40 -top-40 w-80 h-80 rounded-full bg-secondary-500/10 blur-3xl"
         animate={{
           scale: [1, 1.2, 1],
-          opacity: [0.1, 0.15, 0.1]
+          opacity: [0.1, 0.15, 0.1],
         }}
         transition={{
           duration: 12,
           repeat: Infinity,
-          ease: "easeInOut"
+          ease: "easeInOut",
         }}
       />
-      <motion.div 
+      <motion.div
         className="absolute -right-40 -bottom-40 w-80 h-80 rounded-full bg-secondary-500/10 blur-3xl"
         animate={{
           scale: [1, 1.3, 1],
-          opacity: [0.1, 0.2, 0.1]
+          opacity: [0.1, 0.2, 0.1],
         }}
         transition={{
           duration: 15,
           repeat: Infinity,
           ease: "easeInOut",
-          delay: 3
+          delay: 3,
         }}
       />
-      
+
       <div className="flex flex-col md:flex-row items-center gap-8 w-full max-w-7xl relative z-10">
-        <motion.div 
+        <motion.div
           className="w-full md:w-[45%] flex justify-center"
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -62,34 +62,36 @@ function HomeBanner() {
           </div>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="w-full md:w-[45%] flex flex-col gap-6"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          <motion.h1 
+          <motion.h1
             className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-primary-100"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            Find your <span className="text-secondary-500">dream job</span> with us
+            Find your <span className="text-secondary-500">dream job</span> with
+            us
           </motion.h1>
-          
-          <motion.p 
+
+          <motion.p
             className="text-lg text-primary-200"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
             viewport={{ once: true }}
           >
-            Good life begins with a good company. Start exploring thousands of jobs in one place.
+            Good life begins with a good company. Start exploring thousands of
+            jobs in one place.
           </motion.p>
 
-          <motion.div 
+          <motion.div
             className="flex flex-col gap-6 mt-4"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -99,7 +101,7 @@ function HomeBanner() {
             <div className="flex gap-3">
               <div className="flex-1">
                 <label className="block text-primary-200 mb-1">Job Title</label>
-                <motion.div 
+                <motion.div
                   className="bg-primary-900 rounded-lg flex items-center px-3 py-2 border border-primary-800 hover:border-secondary-500/50 transition-colors duration-300"
                   whileHover={{ scale: 1.01 }}
                 >
@@ -111,10 +113,10 @@ function HomeBanner() {
                   />
                 </motion.div>
               </div>
-              
+
               <div className="flex-1">
                 <label className="block text-primary-200 mb-1">Job Type</label>
-                <motion.div 
+                <motion.div
                   className="bg-primary-900 rounded-lg flex items-center px-3 py-2 border border-primary-800 hover:border-secondary-500/50 transition-colors duration-300"
                   whileHover={{ scale: 1.01 }}
                 >
@@ -126,12 +128,12 @@ function HomeBanner() {
                   />
                 </motion.div>
               </div>
-              
-              <motion.button 
+
+              <motion.button
                 className="h-[42px] self-end bg-secondary-500 hover:bg-secondary-600 text-primary-100 font-medium px-4 rounded-lg flex items-center justify-center transition-colors duration-200"
-                whileHover={{ 
+                whileHover={{
                   scale: 1.05,
-                  boxShadow: "0 0 15px rgba(234, 179, 8, 0.4)"
+                  boxShadow: "0 0 15px rgba(234, 179, 8, 0.4)",
                 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleSearch}

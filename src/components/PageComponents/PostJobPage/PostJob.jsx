@@ -311,7 +311,7 @@ const PostJob = () => {
                   placeholder="Add responsibilities here"
                   className="resize-none w-full bg-primary-800 border border-primary-700 rounded-lg py-2 px-3 text-primary-100 focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:border-transparent whitespace-pre-line"
                 ></textarea>
-                
+
                 {errors.responsibilities && (
                   <p className="mt-1 text-sm text-secondary-500">
                     {errors.responsibilities.message}
@@ -329,7 +329,7 @@ const PostJob = () => {
                   placeholder="Add required qualification and skill set here"
                   className="resize-none w-full bg-primary-800 border border-primary-700 rounded-lg py-2 px-3 text-primary-100 focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:border-transparent whitespace-pre-line"
                 ></textarea>
-                
+
                 {errors.qualifications && (
                   <p className="mt-1 text-sm text-secondary-500">
                     {errors.qualifications.message}

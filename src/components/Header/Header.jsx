@@ -7,13 +7,12 @@ import { FiBell, FiSettings } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
-
 function Header() {
   const [mobileOpened, setMobileOpened] = useState(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
-const isLoggedIn = false; 
+  const isLoggedIn = false;
 
-const router = useRouter();
+  const router = useRouter();
   const navLinks = [
     { href: "/find-jobs", label: "Find Jobs" },
     { href: "/find-talent", label: "Find Talent" },
@@ -22,15 +21,15 @@ const router = useRouter();
     { href: "/job-history", label: "Job History" },
   ];
 
- const handleNavClick = (href) => (e) => {
-  e.preventDefault();
-  if (!isLoggedIn) {
-    router.push("/login");
-  } else {
-    router.push(href);
-  }
-  setMobileOpened(false); 
-};
+  const handleNavClick = (href) => (e) => {
+    e.preventDefault();
+    if (!isLoggedIn) {
+      router.push("/login");
+    } else {
+      router.push(href);
+    }
+    setMobileOpened(false);
+  };
 
   const userIconLinks = [
     {

@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import {
   FaEnvelope,
   FaSearch,
@@ -13,42 +13,78 @@ import {
   FaCommentAlt,
   FaInfoCircle,
   FaBriefcase,
-} from 'react-icons/fa';
+} from "react-icons/fa";
 
 const footerLinks = [
   {
-    title: 'Product',
+    title: "Product",
     delay: 0.2,
     links: [
-      { href: '/jobs', icon: <FaSearch className="text-secondary-500" />, label: 'Find Job' },
-      { href: '/post-job', icon: <FaBriefcase className="text-secondary-500" />, label: 'Post Job' },
-      { href: '/employees', icon: <FaUserTie className="text-secondary-500" />, label: 'Find Employee' },
+      {
+        href: "/jobs",
+        icon: <FaSearch className="text-secondary-500" />,
+        label: "Find Job",
+      },
+      {
+        href: "/post-job",
+        icon: <FaBriefcase className="text-secondary-500" />,
+        label: "Post Job",
+      },
+      {
+        href: "/employees",
+        icon: <FaUserTie className="text-secondary-500" />,
+        label: "Find Employee",
+      },
     ],
   },
   {
-    title: 'Company',
+    title: "Company",
     delay: 0.3,
     links: [
-      { href: '/about', icon: <FaBuilding className="text-secondary-500" />, label: 'About Us' },
-      { href: '/contact', icon: <FaEnvelope className="text-secondary-500" />, label: 'Contact' },
-      { href: '/careers', icon: <FaInfoCircle className="text-secondary-500" />, label: 'Careers' },
+      {
+        href: "/about",
+        icon: <FaBuilding className="text-secondary-500" />,
+        label: "About Us",
+      },
+      {
+        href: "/contact",
+        icon: <FaEnvelope className="text-secondary-500" />,
+        label: "Contact",
+      },
+      {
+        href: "/careers",
+        icon: <FaInfoCircle className="text-secondary-500" />,
+        label: "Careers",
+      },
     ],
   },
   {
-    title: 'Support',
+    title: "Support",
     delay: 0.4,
     links: [
-      { href: '/help-center', icon: <FaQuestionCircle className="text-secondary-500" />, label: 'Help Center' },
-      { href: '/feedback', icon: <FaCommentAlt className="text-secondary-500" />, label: 'Feedback' },
-      { href: '/faqs', icon: <FaInfoCircle className="text-secondary-500" />, label: 'FAQs' },
+      {
+        href: "/help-center",
+        icon: <FaQuestionCircle className="text-secondary-500" />,
+        label: "Help Center",
+      },
+      {
+        href: "/feedback",
+        icon: <FaCommentAlt className="text-secondary-500" />,
+        label: "Feedback",
+      },
+      {
+        href: "/faqs",
+        icon: <FaInfoCircle className="text-secondary-500" />,
+        label: "FAQs",
+      },
     ],
   },
 ];
 
 const Footer = () => {
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
   const isLoggedIn = false;
 
   const handleNavClick = (href) => (e) => {
@@ -63,17 +99,17 @@ const Footer = () => {
   const handleSubscribe = (e) => {
     e.preventDefault();
     if (!email) {
-      setEmailError('Please enter your email');
+      setEmailError("Please enter your email");
       return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setEmailError('Please enter a valid email');
+      setEmailError("Please enter a valid email");
       return;
     }
     // Handle subscription logic here
-    console.log('Subscribed with:', email);
-    setEmail('');
-    setEmailError('');
+    console.log("Subscribed with:", email);
+    setEmail("");
+    setEmailError("");
   };
 
   return (
@@ -87,11 +123,13 @@ const Footer = () => {
           className="mb-16"
         >
           <h2 className="text-3xl sm:text-4xl font-bold text-primary-100 mb-4">
-            Never Want to Miss Any <span className="text-secondary-500">Job News?</span>
+            Never Want to Miss Any{" "}
+            <span className="text-secondary-500">Job News?</span>
           </h2>
           <div className="flex flex-col gap-4 max-w-2xl">
             <p className="text-primary-200">
-              Subscribe to our newsletter for the latest job opportunities and career tips.
+              Subscribe to our newsletter for the latest job opportunities and
+              career tips.
             </p>
             <form onSubmit={handleSubscribe} noValidate>
               <div className="flex flex-col gap-2">
@@ -101,7 +139,7 @@ const Footer = () => {
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
-                      setEmailError('');
+                      setEmailError("");
                     }}
                     placeholder="Your@email.com"
                     className="flex-1 bg-primary-900 border border-primary-800 rounded-lg px-4 py-2 text-primary-100 focus:outline-none focus:border-secondary-500 transition-colors duration-300"
@@ -135,9 +173,12 @@ const Footer = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h3 className="text-2xl font-bold mb-6 text-secondary-500">HireSphere</h3>
+            <h3 className="text-2xl font-bold mb-6 text-secondary-500">
+              HireSphere
+            </h3>
             <p className="text-primary-200 mb-6">
-              Job portal with user profiles, skill updates, certifications, work experience and admin job postings.
+              Job portal with user profiles, skill updates, certifications, work
+              experience and admin job postings.
             </p>
           </motion.div>
 
@@ -174,7 +215,7 @@ const Footer = () => {
 
         <motion.div
           initial={{ width: 0 }}
-          whileInView={{ width: '100%' }}
+          whileInView={{ width: "100%" }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
           className="h-px bg-primary-800 my-8"
@@ -188,7 +229,8 @@ const Footer = () => {
           className="text-center text-primary-400"
         >
           <p>
-            Designed & Developed By <span className="font-bold text-secondary-500">Hishila Bhusal</span>
+            Designed & Developed By{" "}
+            <span className="font-bold text-secondary-500">Hishila Bhusal</span>
           </p>
         </motion.div>
       </div>
